@@ -3,12 +3,22 @@ const { expect } = chai;
 chai.use(require("chai-json-schema-ajv"));
 const apiFetch = require("../component/fetchAPI");
 const checkStatus = require("../component/checkStatus");
+const formatTime = require("../component/formatTime");
+const { authSchema, userSchema } = require("../component/schema");
 
 let accessToken;
 let refreshToken;
 let data = { email: "john@mail.com", password: "changeme" };
 
 describe("Auth Test", () => {
+  before(() => {
+    performance.mark("start");
+  });
+  after(() => {
+    performance.mark("end");
+    const time = performance.measure("Time", "start", "end").duration.toFixed();
+    formatTime(time);
+  });
   describe("Login", () => {
     let res;
     before(async () => {
@@ -22,6 +32,9 @@ describe("Auth Test", () => {
     it("Login Success", () => {
       expect(res.body).haveOwnProperty("access_token");
       expect(res.body).haveOwnProperty("refresh_token");
+    });
+    it("JSON schema is valid", () => {
+      expect(res.body).have.jsonSchema(authSchema);
     });
   });
 
@@ -37,6 +50,9 @@ describe("Auth Test", () => {
       expect(res.body.email).to.equal(data.email);
       expect(res.body.password).to.equal(data.password);
     });
+    it("JSON schema is valid", () => {
+      expect(res.body).have.jsonSchema(userSchema);
+    });
   });
 
   describe("Generate new access token", () => {
@@ -50,6 +66,9 @@ describe("Auth Test", () => {
     it("Generate new success", () => {
       expect(res.body).haveOwnProperty("access_token");
       expect(res.body).haveOwnProperty("refresh_token");
+    });
+    it("JSON schema is valid", () => {
+      expect(res.body).have.jsonSchema(authSchema);
     });
   });
 });

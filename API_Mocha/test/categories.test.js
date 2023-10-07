@@ -3,12 +3,22 @@ const { expect } = chai;
 chai.use(require("chai-json-schema-ajv"));
 const apiFetch = require("../component/fetchAPI");
 const checkStatus = require("../component/checkStatus");
+const formatTime = require("../component/formatTime");
+const { categorySchema } = require("../component/schema");
 
 let allCategories;
 let randomElement;
 let categoryId;
 
 describe("Categories Test", () => {
+  before(() => {
+    performance.mark("start");
+  });
+  after(() => {
+    performance.mark("end");
+    const time = performance.measure("Time", "start", "end").duration.toFixed();
+    formatTime(time);
+  });
   describe("Get all categories", () => {
     before(async () => {
       allCategories = await apiFetch("categories");
@@ -22,6 +32,9 @@ describe("Categories Test", () => {
     });
     it("Should get list of products", async () => {
       expect(allCategories.body.length).above(1);
+    });
+    it("JSON schema is valid", () => {
+      expect(allCategories.body[0]).have.jsonSchema(categorySchema);
     });
   });
 
@@ -38,6 +51,9 @@ describe("Categories Test", () => {
     });
     it("Category id should same", async () => {
       expect(res.body.id).is.equal(randomElement);
+    });
+    it("JSON schema is valid", () => {
+      expect(res.body).have.jsonSchema(categorySchema);
     });
   });
 
@@ -59,6 +75,9 @@ describe("Categories Test", () => {
       expect(res.body.name).to.equal(data.name);
       expect(res.body.image).to.equal(data.image);
     });
+    it("JSON schema is valid", () => {
+      expect(res.body).have.jsonSchema(categorySchema);
+    });
   });
 
   describe("Update category", () => {
@@ -77,6 +96,9 @@ describe("Categories Test", () => {
     it("Updates existing category", async () => {
       expect(res.body.name).to.equal(data.name);
       expect(res.body.image).to.equal(data.image);
+    });
+    it("JSON schema is valid", () => {
+      expect(res.body).have.jsonSchema(categorySchema);
     });
   });
 });

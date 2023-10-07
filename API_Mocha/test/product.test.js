@@ -1,14 +1,25 @@
+const jsonSchema = require("chai-json-schema-ajv");
 const chai = require("chai");
 const { expect } = chai;
-chai.use(require("chai-json-schema-ajv"));
+chai.use(jsonSchema);
 const apiFetch = require("../component/fetchAPI");
 const checkStatus = require("../component/checkStatus");
+const { productSchema } = require("../component/schema");
+const formatTime = require("../component/formatTime");
 
 let randomElement;
 let createdId;
 let allProduct;
 
 describe("Product Test", () => {
+  before(() => {
+    performance.mark("start");
+  });
+  after(() => {
+    performance.mark("end");
+    const time = performance.measure("Time", "start", "end").duration.toFixed();
+    formatTime(time);
+  });
   describe("Get all product", () => {
     before(async () => {
       allProduct = await apiFetch("products");
@@ -21,6 +32,9 @@ describe("Product Test", () => {
     });
     it("Should get list of products", async () => {
       expect(allProduct.body.length).above(1);
+    });
+    it("JSON schema is valid", () => {
+      expect(allProduct.body[0]).have.jsonSchema(productSchema);
     });
   });
 
@@ -37,6 +51,9 @@ describe("Product Test", () => {
     });
     it("Product id should same", async () => {
       expect(res.body.id).is.equal(randomElement);
+    });
+    it("JSON schema is valid", () => {
+      expect(res.body).have.jsonSchema(productSchema);
     });
   });
 
@@ -56,6 +73,9 @@ describe("Product Test", () => {
     it("returns correct number of products", async () => {
       expect(res.body.length).to.equal(10);
     });
+    it("JSON schema is valid", () => {
+      expect(res.body[0]).have.jsonSchema(productSchema);
+    });
   });
 
   describe("Create a product", () => {
@@ -67,7 +87,7 @@ describe("Product Test", () => {
         price: 1500,
         description: "404 description",
         categoryId: 1,
-        images: ["https://http.cat/404", "https://http.cat/404"],
+        images: ["https://http.cat/404", "https://http.cat/304"],
       };
       res = await apiFetch("products/", "POST", data);
       // Ambil id yg telah dibuat agar bisa digunakan di test lain
@@ -96,6 +116,9 @@ describe("Product Test", () => {
         )
       );
     });
+    it("JSON schema is valid", () => {
+      expect(res.body).have.jsonSchema(productSchema);
+    });
   });
 
   describe("Update product", () => {
@@ -119,6 +142,9 @@ describe("Product Test", () => {
     });
     it("Product description updated", () => {
       expect(res.body.description).to.equal(data.description);
+    });
+    it("JSON schema is valid", () => {
+      expect(res.body).have.jsonSchema(productSchema);
     });
   });
 

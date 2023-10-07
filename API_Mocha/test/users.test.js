@@ -3,11 +3,21 @@ const { expect } = chai;
 chai.use(require("chai-json-schema-ajv"));
 const apiFetch = require("../component/fetchAPI");
 const checkStatus = require("../component/checkStatus");
+const formatTime = require("../component/formatTime");
+const { userSchema } = require("../component/schema");
 
 let allUsers;
 let userId;
 let randomElement;
 describe("Users Test", () => {
+  before(() => {
+    performance.mark("start");
+  });
+  after(() => {
+    performance.mark("end");
+    const time = performance.measure("Time", "start", "end").duration.toFixed();
+    formatTime(time);
+  });
   describe("Get all users", () => {
     before(async () => {
       allUsers = await apiFetch("users");
@@ -19,6 +29,9 @@ describe("Users Test", () => {
     });
     it("Should get list of products", async () => {
       expect(allUsers.body.length).above(1);
+    });
+    it("JSON schema is valid", () => {
+      expect(allUsers.body[0]).have.jsonSchema(userSchema);
     });
   });
 
@@ -36,6 +49,9 @@ describe("Users Test", () => {
     });
     it("User id should same", async () => {
       expect(res.body.id).is.equal(randomElement);
+    });
+    it("JSON schema is valid", () => {
+      expect(res.body).have.jsonSchema(userSchema);
     });
   });
 
@@ -62,6 +78,9 @@ describe("Users Test", () => {
       expect(res.body.password).to.equal(data.password);
       expect(res.body.avatar).to.equal(data.avatar);
     });
+    it("JSON schema is valid", () => {
+      expect(res.body).have.jsonSchema(userSchema);
+    });
   });
 
   describe("Update creatd user", () => {
@@ -84,6 +103,9 @@ describe("Users Test", () => {
       expect(res.body.email).to.equal(data.email);
       expect(res.body.password).to.equal(data.password);
       expect(res.body.avatar).to.equal(data.avatar);
+    });
+    it("JSON schema is valid", () => {
+      expect(res.body).have.jsonSchema(userSchema);
     });
   });
 

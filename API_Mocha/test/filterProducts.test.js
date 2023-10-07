@@ -3,8 +3,18 @@ const { expect } = chai;
 chai.use(require("chai-json-schema-ajv"));
 const apiFetch = require("../component/fetchAPI");
 const checkStatus = require("../component/checkStatus");
+const formatTime = require("../component/formatTime");
+const { productSchema } = require("../component/schema");
 
 describe("Products Filter Test", () => {
+  before(() => {
+    performance.mark("start");
+  });
+  after(() => {
+    performance.mark("end");
+    const time = performance.measure("Time", "start", "end").duration.toFixed();
+    formatTime(time);
+  });
   describe("Filter by category", () => {
     let res;
     let categoryId = 1;
@@ -19,11 +29,14 @@ describe("Products Filter Test", () => {
         expect(product.category.id).to.equal(categoryId);
       });
     });
+    it("JSON schema is valid", () => {
+      expect(res.body[0]).have.jsonSchema(productSchema);
+    });
   });
 
   describe("Filter by price", () => {
     let res;
-    let price = 156;
+    let price = 100;
     before(async () => {
       res = await apiFetch("products?price=" + price);
     });
@@ -35,12 +48,15 @@ describe("Products Filter Test", () => {
         expect(product.price).to.equal(price);
       });
     });
+    it("JSON schema is valid", () => {
+      expect(res.body[0]).have.jsonSchema(productSchema);
+    });
   });
 
   describe("Filter by price range", () => {
     let res;
     let min = 156;
-    let max = 156;
+    let max = 160;
     before(async () => {
       res = await apiFetch("products?price_min=" + min + "&price_max=" + max);
     });
@@ -52,11 +68,14 @@ describe("Products Filter Test", () => {
         expect(product.price).to.be.within(min, max);
       });
     });
+    it("JSON schema is valid", () => {
+      expect(res.body[0]).have.jsonSchema(productSchema);
+    });
   });
 
   describe("Filter by title", () => {
     let res;
-    let title = "jeans";
+    let title = "Chicken";
     before(async () => {
       res = await apiFetch("products?title=" + title);
     });
@@ -67,6 +86,9 @@ describe("Products Filter Test", () => {
       res.body.forEach((product) => {
         expect(product.title).to.include(title);
       });
+    });
+    it("JSON schema is valid", () => {
+      expect(res.body[0]).have.jsonSchema(productSchema);
     });
   });
 });
