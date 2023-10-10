@@ -10,6 +10,7 @@ const options = {
     "appium:deviceName": "emulator-5554",
     "appium:app": path.join(process.cwd(), "apk/crud.apk"),
     "appium:appActivity": ".MainActivity",
+    // "appium:noReset": true, //Tidak reset aplikasi
   },
 };
 
