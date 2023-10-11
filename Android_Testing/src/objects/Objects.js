@@ -1,5 +1,7 @@
-const { expect } = require("chai");
-
+const chai = require("chai");
+const { chaiImage } = require("chai-image");
+const { existsSync, writeFileSync, readFileSync } = require("fs");
+chai.use(chaiImage);
 class ObjectsKategori {
   constructor(driver) {
     /** @type {WebdriverIO.Browser} */ this.driver = driver;
@@ -35,7 +37,7 @@ class ObjectsKategori {
       .$("id=lvkategori")
       .isExisting()
       .then((res) => {
-        expect(res).to.equal(true);
+        chai.expect(res).to.equal(true);
       })
       .catch((e) => {
         throw new Error(e);
@@ -54,7 +56,7 @@ class ObjectsKategori {
       .$("id=tvTambahKategoriJudul")
       .isExisting()
       .then((res) => {
-        expect(res).to.equal(true);
+        chai.expect(res).to.equal(true);
       })
       .catch((e) => {
         throw new Error(e);
@@ -67,19 +69,23 @@ class ObjectsKategori {
    * @param {string} [value="404 Value"]
    * @memberof ObjectKategori
    */
-  async inputKategori(value = "404 Value") {
+  async inputKategori(value = "404 Value", check = true) {
     await this.driver.$("id=tietNamaKategori").setValue(value);
     await this.driver.$("id=btTambahKategoriSimpan").click();
-    this.itemCount++;
-    await this.driver
-      .$(`//android.widget.ListView/android.widget.TextView[${this.itemCount}]`)
-      .isExisting()
-      .then((res) => {
-        expect(res).to.equal(true);
-      })
-      .catch((e) => {
-        throw new Error(e);
-      });
+    if (check) {
+      this.itemCount++;
+      await this.driver
+        .$(
+          `//android.widget.ListView/android.widget.TextView[${this.itemCount}]`
+        )
+        .isExisting()
+        .then((res) => {
+          chai.expect(res).to.equal(true);
+        })
+        .catch((e) => {
+          throw new Error(e);
+        });
+    }
   }
 
   /**
@@ -103,7 +109,7 @@ class ObjectsKategori {
       .$("id=tvDetailKategoriJudul")
       .getText()
       .then((res) => {
-        expect(res).to.equal("Edit Data Kategori");
+        chai.expect(res).to.equal("Edit Data Kategori");
       })
       .catch((e) => {
         throw new Error(e);
@@ -117,7 +123,7 @@ class ObjectsKategori {
       .$(`//android.widget.ListView/android.widget.TextView[${index}]`)
       .getText()
       .then((res) => {
-        expect(res).to.equal(data);
+        chai.expect(res).to.equal(data);
       })
       .catch((e) => {
         throw new Error(e);
@@ -162,7 +168,7 @@ class ObjectsKategori {
       .$(`//android.widget.ListView/android.widget.TextView[${index}]`)
       .isExisting()
       .then((res) => {
-        expect(res).to.equal(false);
+        chai.expect(res).to.equal(false);
       })
       .catch((e) => {
         throw new Error(e);
@@ -205,7 +211,7 @@ class ObjectsWilayah {
       .$("id=lvwilayah")
       .isExisting()
       .then((res) => {
-        expect(res).to.equal(true);
+        chai.expect(res).to.equal(true);
       })
       .catch((e) => {
         throw new Error(e);
@@ -224,7 +230,7 @@ class ObjectsWilayah {
       .$("id=tvTambahWilayahJudul")
       .isExisting()
       .then((res) => {
-        expect(res).to.equal(true);
+        chai.expect(res).to.equal(true);
       })
       .catch((e) => {
         throw new Error(e);
@@ -245,7 +251,7 @@ class ObjectsWilayah {
       .$(`//android.widget.ListView/android.widget.TextView[${this.itemCount}]`)
       .isExisting()
       .then((res) => {
-        expect(res).to.equal(true);
+        chai.expect(res).to.equal(true);
       })
       .catch((e) => {
         throw new Error(e);
@@ -273,7 +279,7 @@ class ObjectsWilayah {
       .$("id=tvDetailWilayahJudul")
       .getText()
       .then((res) => {
-        expect(res).to.equal("Edit Data Wilayah");
+        chai.expect(res).to.equal("Edit Data Wilayah");
       })
       .catch((e) => {
         throw new Error(e);
@@ -287,7 +293,7 @@ class ObjectsWilayah {
       .$(`//android.widget.ListView/android.widget.TextView[${index}]`)
       .getText()
       .then((res) => {
-        expect(res).to.equal(data);
+        chai.expect(res).to.equal(data);
       })
       .catch((e) => {
         throw new Error(e);
@@ -332,7 +338,7 @@ class ObjectsWilayah {
       .$(`//android.widget.ListView/android.widget.TextView[${index}]`)
       .isExisting()
       .then((res) => {
-        expect(res).to.equal(false);
+        chai.expect(res).to.equal(false);
       })
       .catch((e) => {
         throw new Error(e);
@@ -377,7 +383,7 @@ class ObjectsWisata {
       .$("id=lvWisata")
       .isExisting()
       .then((res) => {
-        expect(res).to.equal(true);
+        chai.expect(res).to.equal(true);
       })
       .catch((e) => {
         throw new Error(e);
@@ -396,7 +402,7 @@ class ObjectsWisata {
       .$("id=tvTambahWisataJudul")
       .isExisting()
       .then((res) => {
-        expect(res).to.equal(true);
+        chai.expect(res).to.equal(true);
       })
       .catch((e) => {
         throw new Error(e);
@@ -438,7 +444,7 @@ class ObjectsWisata {
       .$(`//android.widget.ListView/android.widget.TextView[${this.itemCount}]`)
       .isExisting()
       .then((res) => {
-        expect(res).to.equal(true);
+        chai.expect(res).to.equal(true);
       })
       .catch((e) => {
         throw new Error(e);
@@ -470,7 +476,7 @@ class ObjectsWisata {
       .$("id=tvDetailWisataJudul")
       .getText()
       .then((res) => {
-        expect(res).to.equal("Edit Data Wisata");
+        chai.expect(res).to.equal("Edit Data Wisata");
       })
       .catch((e) => {
         throw new Error(e);
@@ -499,7 +505,7 @@ class ObjectsWisata {
       .$(`//android.widget.ListView/android.widget.TextView[${index}]`)
       .getText()
       .then((res) => {
-        expect(res).to.equal(newName);
+        chai.expect(res).to.equal(newName);
       })
       .catch((e) => {
         throw new Error(e);
@@ -544,7 +550,7 @@ class ObjectsWisata {
       .$(`//android.widget.ListView/android.widget.TextView[${index}]`)
       .isExisting()
       .then((res) => {
-        expect(res).to.equal(false);
+        chai.expect(res).to.equal(false);
       })
       .catch((e) => {
         throw new Error(e);
@@ -554,4 +560,46 @@ class ObjectsWisata {
   }
 }
 
-module.exports = { ObjectsKategori, ObjectsWilayah, ObjectsWisata };
+class ObjectsVisual {
+  /**
+   *  Creates an instance of ObjectsVisual.
+   * @param {WebdriverIO.Browser} driver
+   * @memberof ObjectsVisual
+   */
+  constructor(driver) {
+    this.driver = driver;
+  }
+
+  async visualTest(PAGE_NAME) {
+    const tempScreenshotPath = `../img/temp/${PAGE_NAME}`;
+    const baseScreenshotPath = `../img/base/${PAGE_NAME}.jpg`;
+    const actualScreenshotPath = `../img/actual/${PAGE_NAME}.jpg`;
+
+    /** @type {boolean}*/ const isBaseScreenshotExist =
+      existsSync(baseScreenshotPath);
+
+    // Return Screenshot Buffer
+    const pageScreenshotBuffer = await this.driver
+      .saveScreenshot(tempScreenshotPath)
+      .catch((e) => {
+        throw new Error(e);
+      });
+
+    if (isBaseScreenshotExist) {
+      const baseScreenshotBuffer = readFileSync(baseScreenshotPath);
+
+      writeFileSync(actualScreenshotPath, pageScreenshotBuffer);
+
+      chai.expect(pageScreenshotBuffer).to.matchImage(baseScreenshotBuffer);
+    } else {
+      writeFileSync(baseScreenshotPath, pageScreenshotBuffer);
+    }
+  }
+}
+
+module.exports = {
+  ObjectsKategori,
+  ObjectsWilayah,
+  ObjectsWisata,
+  ObjectsVisual,
+};

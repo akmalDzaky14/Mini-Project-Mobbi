@@ -1,0 +1,7 @@
+1. Input kategori tanpa text
+2. Update kategori tanpa text
+3. Input wilayah tanpa text
+4. Update wilayah tanpa text
+5. Input wisata tanpa text, data kategori kosong dan data wilayah kosong
+6. Update wisata tanpa text
+7. Ketika ada data di wisata, coba hapus kategori dan wilayah

@@ -16,6 +16,9 @@ describe("Test aplikasi CRUD", () => {
   before(async () => {
     performance.mark("Prepare-start-all");
     driver = await setDriver(options);
+    objKategori = new ObjectsKategori(driver);
+    objWilayah = new ObjectsWilayah(driver);
+    objWisata = new ObjectsWisata(driver);
   });
   after(async () => {
     await driver.closeApp();
@@ -29,7 +32,6 @@ describe("Test aplikasi CRUD", () => {
   describe("E2E_01_Halaman Kategori", () => {
     before(async () => {
       performance.mark("Prepare-start");
-      objKategori = new ObjectsKategori(driver);
     });
     after(async () => {
       performance.mark("Prepare-finished");
@@ -61,7 +63,6 @@ describe("Test aplikasi CRUD", () => {
   describe("E2E_02_Halaman Wilayah", () => {
     before(async () => {
       performance.mark("Prepare-start");
-      objWilayah = new ObjectsWilayah(driver);
     });
     after(async () => {
       performance.mark("Prepare-finished");
@@ -93,7 +94,6 @@ describe("Test aplikasi CRUD", () => {
   describe("E2E_03_Halaman Wisata", () => {
     before(async () => {
       performance.mark("Prepare-start");
-      objWisata = new ObjectsWisata(driver);
     });
     after(async () => {
       performance.mark("Prepare-finished");
