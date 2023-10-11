@@ -18,15 +18,13 @@ describe("End to End Test Website Swaglabs", () => {
   let title;
   let urlCheck;
   let titleCheck;
-  let itemTitles = [];
   let itemData = [];
+  let itemTitles = [];
 
   /** @type {WebDriver} */ let driver;
   /** @type {HomePage} */ let homePage;
   /** @type {AllProductsPage} */ let allProductsPage;
-  /** @type {PresetPackPage} */ let presetPackPage;
   /** @type {CartPage} */ let cartPage;
-  /** @type {ThankYouPage} */ let thankYouPage;
 
   before(async () => {
     driver = await setupDriver();
@@ -210,25 +208,17 @@ describe("End to End Test Website Swaglabs", () => {
       expect(titleCheck).is.equal("Enquiry Cart");
     });
 
-    // Skip, tidak bisa menemukan element
-    it.skip("Check Items", async () => {
-      const parent = '//td[@class="product-name"]';
-      // => (//td[@class="product-name"])[1]/a
+    it("Check Items", async () => {
       const all = await driver.wait(
-        until.elementsLocated(By.xpath(`${parent}`)),
+        until.elementsLocated(By.css(`.shop_table tbody tr`)),
         10000
       );
-      for (let index = 1; index <= all.length; index++) {
-        console.log(
-          await driver
-            .findElement(By.xpath(`(${parent})[${index}]/a`))
-            .getText()
-        );
-        console.log(
-          await driver
-            .findElement(By.xpath(`(${parent})[${index}]/span`))
-            .getText()
-        );
+      for (let index = 1; index < all.length - 1; index++) {
+        const text = await driver
+          .findElement(By.xpath(`//tbody/tr[${index}]//td[3]`))
+          .getText();
+        expect(text).to.include(itemTitles[index - 1]);
+        expect(text).to.include(itemData[index - 1]);
       }
     });
 
@@ -244,12 +234,9 @@ describe("End to End Test Website Swaglabs", () => {
       await driver
         .findElement(By.xpath(`${parent}//input[@name="pi_phone"]`))
         .sendKeys("083231441");
-
-      //   const select = await driver.findElement(By.name("quantity"));
       await driver
         .findElement(By.xpath(`//select[@name="quantity"]/option[${2}]`))
         .click();
-
       await driver
         .findElement(By.xpath(`${parent}//input[@name="pi_subject"]`))
         .sendKeys("Test Subject");

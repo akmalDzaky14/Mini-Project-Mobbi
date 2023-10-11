@@ -5,7 +5,7 @@ const setupDriver = require("../../utils/setupDriver");
 const formatTime = require("../../src/functions/convertTime");
 const AllProductsPage = require("../../src/pages/allProducts");
 
-describe("Component Test Products Page", () => {
+describe("Smoke Test Products Page", () => {
   let urlCheck;
   let titleCheck;
   let res;
@@ -43,14 +43,14 @@ describe("Component Test Products Page", () => {
     formatTime(time);
   });
 
-  it("CT_Products_01_URL is correct", () => {
+  it("ST_Products_01_URL is correct", () => {
     expect(urlCheck).to.equal(true);
   });
-  it("CT_Products_02_Open page", () => {
+  it("ST_Products_02_Open page", () => {
     expect(titleCheck).is.equal("Products");
   });
 
-  it("CT_Products_03_Select product", async () => {
+  it("ST_Products_03_Select product", async () => {
     // Pilih product dengan 1 kata [Baru packaging dan t-shirt yg punya var title]
     res = await allProductsPage.selectProduct("packaging");
     await driver.wait(until.titleContains(res));
@@ -58,7 +58,7 @@ describe("Component Test Products Page", () => {
     title = await driver.findElement(By.xpath(`//h1[1]`)).getText();
     expect(title).to.equal(res);
   });
-  it("CT_Products_04_Select post", async () => {
+  it("ST_Products_04_Select post", async () => {
     // Pilih item product
     res2 = await allProductsPage.selectPost(2);
     await driver.wait(until.titleContains(res2), 3000);
@@ -66,7 +66,7 @@ describe("Component Test Products Page", () => {
     expect(title2).to.equal(res2);
   });
 
-  it("CT_Products_05_Select product Dua", async () => {
+  it("ST_Products_05_Select product Dua", async () => {
     await allProductsPage.openPage();
     await driver.wait(until.titleContains("All Products"));
     // Pilih product dengan 1 kata [Baru packaging dan t-shirt yg punya var title]
@@ -76,7 +76,7 @@ describe("Component Test Products Page", () => {
     title = await driver.findElement(By.xpath(`//h1[1]`)).getText();
     expect(title).to.equal(res);
   });
-  it("CT_Products_06_Select post Dus", async () => {
+  it("ST_Products_06_Select post Dus", async () => {
     // Pilih item product
     res2 = await allProductsPage.selectPost(5);
     await driver.wait(until.titleContains(res2));

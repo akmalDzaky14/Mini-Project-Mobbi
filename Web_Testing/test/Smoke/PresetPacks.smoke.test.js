@@ -5,7 +5,7 @@ const setupDriver = require("../../utils/setupDriver");
 const PresetPackPage = require("../../src/pages/presetPack");
 const formatTime = require("../../src/functions/convertTime");
 
-describe("Component Test Preset Packs Page", () => {
+describe("Smoke Test Preset Packs Page", () => {
   let res;
   let title;
   let urlCheck;
@@ -41,19 +41,19 @@ describe("Component Test Preset Packs Page", () => {
     formatTime(time);
   });
 
-  it("CT_Preset Packs_01_URL is correct", () => {
+  it("ST_Preset Packs_01_URL is correct", () => {
     expect(urlCheck).to.equal(true);
   });
-  it("CT_Preset Packs_02_Open page", () => {
+  it("ST_Preset Packs_02_Open page", () => {
     expect(titleCheck).is.equal("Preset Packs");
   });
-  it("CT_Preset Packs_03_Test", async () => {
+  it("ST_Preset Packs_03_Test", async () => {
     res = await presetPackPage.selectPack(4);
     await driver.sleep(2000);
     title = await driver.findElement(By.xpath(`//h1`)).getText();
     expect(title).to.equal(res);
   });
-  it("CT_Preset Packs_04_Test", async () => {
+  it("ST_Preset Packs_04_Test", async () => {
     await presetPackPage.openPage();
     await driver.sleep(1000);
     res = await presetPackPage.selectPack(3);

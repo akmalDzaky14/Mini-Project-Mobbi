@@ -13,8 +13,8 @@
 const { WebDriver, By, until } = require("selenium-webdriver");
 const { expect } = require("chai");
 
-const formatTime = require("../src/functions/convertTime");
-const setupDriver = require("../utils/setupDriver");
+const formatTime = require("../../src/functions/convertTime");
+const setupDriver = require("../../utils/setupDriver");
 
 describe("Smoke Test Top Navbar Menu", () => {
   /** @type {WebDriver} */ let driver;

@@ -5,7 +5,7 @@ const BlogsPage = require("../../src/pages/blogs");
 const setupDriver = require("../../utils/setupDriver");
 const formatTime = require("../../src/functions/convertTime");
 
-describe("Component Test Blogs Page", () => {
+describe("Smoke Test Blogs Page", () => {
   let urlCheck;
   let titleCheck;
   let res;
@@ -41,13 +41,13 @@ describe("Component Test Blogs Page", () => {
     formatTime(time);
   });
 
-  it("CT_Blogs_01_URL is correct", () => {
+  it("ST_Blogs_01_URL is correct", () => {
     expect(urlCheck).to.equal(true);
   });
-  it("CT_Blogs_02_Open page", () => {
+  it("ST_Blogs_02_Open page", () => {
     expect(titleCheck).is.equal("Blogs");
   });
-  it("CT_Blogs_03_Select Article", async () => {
+  it("ST_Blogs_03_Select Article", async () => {
     // Posting 1-3 title berbeda, pilih 4++
     res = await blogsPage.selectArticle(4);
     articleTitle = await driver.findElement(By.xpath(`//h1[1]`)).getText();

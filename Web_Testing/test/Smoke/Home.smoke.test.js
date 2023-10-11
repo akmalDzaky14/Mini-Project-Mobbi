@@ -6,7 +6,7 @@ const scroll = require("../../src/functions/scroll");
 const setupDriver = require("../../utils/setupDriver");
 const formatTime = require("../../src/functions/convertTime");
 
-describe("Component Test Home Page", () => {
+describe("Smoke Test Home Page", () => {
   let res;
   let time;
   let title;
@@ -46,13 +46,13 @@ describe("Component Test Home Page", () => {
     formatTime(time);
   });
 
-  it("CT_Home Page_001_URL is correct", () => {
+  it("ST_Home Page_001_URL is correct", () => {
     expect(urlCheck).to.equal(true);
   });
-  it("CT_Home Page_002_Page is opened", () => {
+  it("ST_Home Page_002_Page is opened", () => {
     expect(titleCheck).include("Helping You Design, Shop");
   });
-  it("CT_Home Page_003_Select Preset Pack", async () => {
+  it("ST_Home Page_003_Select Preset Pack", async () => {
     await scroll(driver, 1450);
     await driver.sleep(1000);
 
@@ -75,7 +75,7 @@ describe("Component Test Home Page", () => {
     expect(res).to.equal(title);
     await driver.navigate().back();
   });
-  it("CT_Home Page_004_Select Custom Pack", async () => {
+  it("ST_Home Page_004_Select Custom Pack", async () => {
     await driver.wait(until.titleContains("Quality Corporate"), 2000);
     res = await homePage.selectCustom(0);
     await driver.wait(until.titleContains("Notebooks"), 2000);
@@ -103,7 +103,7 @@ describe("Component Test Home Page", () => {
     await driver.navigate().back();
     await driver.wait(until.titleContains("Quality Corporate"), 2000);
   });
-  it("CT_Home Page_005_Test Contact Form", async () => {
+  it("ST_Home Page_005_Test Contact Form", async () => {
     const parent = 'form[@name="Contact-Form-1"]';
 
     await driver.sleep(1000);

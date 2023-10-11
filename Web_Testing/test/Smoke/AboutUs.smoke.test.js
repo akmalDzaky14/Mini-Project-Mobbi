@@ -6,7 +6,7 @@ const setupDriver = require("../../utils/setupDriver");
 const AboutUsPage = require("../../src/pages/aboutUs");
 const formatTime = require("../../src/functions/convertTime");
 
-describe("Component Test About Us Page", () => {
+describe("Smoke Test About Us Page", () => {
   let time;
   let urlCheck;
   let titleCheck;
@@ -41,13 +41,13 @@ describe("Component Test About Us Page", () => {
     formatTime(time);
   });
 
-  it("CT_About Us_01_URL is correct", () => {
+  it("ST_About Us_01_URL is correct", () => {
     expect(urlCheck).to.equal(true);
   });
-  it("CT_About Us_02_Open page", () => {
+  it("ST_About Us_02_Open page", () => {
     expect(titleCheck).is.equal("About Us");
   });
-  it("CT_About Us_03_Test Contact Form", async () => {
+  it("ST_About Us_03_Test Contact Form", async () => {
     const parent = 'form[@name="Contact-Form-1"]';
 
     await driver.sleep(1000);

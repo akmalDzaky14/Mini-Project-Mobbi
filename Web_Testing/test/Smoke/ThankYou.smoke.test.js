@@ -5,7 +5,7 @@ const setupDriver = require("../../utils/setupDriver");
 const ThankYouPage = require("../../src/pages/thankYou");
 const formatTime = require("../../src/functions/convertTime");
 
-describe("Component Test Thank You Page", () => {
+describe("Smoke Test Thank You Page", () => {
   let res;
   let title;
   let urlCheck;
@@ -40,13 +40,13 @@ describe("Component Test Thank You Page", () => {
     formatTime(time);
   });
 
-  it("CT_Thank You_01_URL is correct", () => {
+  it("ST_Thank You_01_URL is correct", () => {
     expect(urlCheck).to.equal(true);
   });
-  it("CT_Thank You_02_Open page", () => {
+  it("ST_Thank You_02_Open page", () => {
     expect(titleCheck).is.equal("Thank You!");
   });
-  it("CT_Thank You_03_Click Contact Us Button", async () => {
+  it("ST_Thank You_03_Click Contact Us Button", async () => {
     res = await thankYouPage.button("contact");
     await driver.sleep(2000);
     title = await driver
@@ -54,7 +54,7 @@ describe("Component Test Thank You Page", () => {
       .getText();
     expect(title).to.equal(res);
   });
-  it("CT_Thank You_04_Click Back To Home Button", async () => {
+  it("ST_Thank You_04_Click Back To Home Button", async () => {
     await driver.sleep(1000);
     await thankYouPage.openPage();
     await driver.sleep(1000);
