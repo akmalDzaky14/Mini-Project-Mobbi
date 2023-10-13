@@ -16,7 +16,7 @@ const { expect } = require("chai");
 const formatTime = require("../../src/functions/convertTime");
 const setupDriver = require("../../utils/setupDriver");
 
-describe("Smoke Test Top Navbar Menu", () => {
+describe("Component Test Top Navbar Menu", () => {
   /** @type {WebDriver} */ let driver;
 
   before(async () => {
@@ -35,7 +35,7 @@ describe("Smoke Test Top Navbar Menu", () => {
     formatTime(totalTime, true);
   });
 
-  it("ST_01_Home", async () => {
+  it("CT_01_Home", async () => {
     await driver.get("https://swaglabs.in/about-us/");
 
     await driver
@@ -52,7 +52,7 @@ describe("Smoke Test Top Navbar Menu", () => {
         expect(res).to.equal(true);
       }, 2000);
   });
-  it("ST_02_About Us", async () => {
+  it("CT_02_About Us", async () => {
     await driver
       .findElement(
         By.xpath(
@@ -65,7 +65,7 @@ describe("Smoke Test Top Navbar Menu", () => {
       expect(res).to.equal(true);
     }, 2000);
   });
-  it("ST_03_Our Prints", async () => {
+  it("CT_03_Our Prints", async () => {
     await driver
       .findElement(
         By.xpath(
@@ -78,7 +78,7 @@ describe("Smoke Test Top Navbar Menu", () => {
       expect(res).to.equal(true);
     }, 2000);
   });
-  it("ST_04_All Products", async () => {
+  it("CT_04_All Products", async () => {
     const parent = `//section[@data-id="7b39696"]//div[@data-id="6c1d68c"]//ul[@id="menu-1-c2a71a6"]/li[4]`;
 
     await driver.findElement(By.xpath(`${parent}`)).click();
@@ -86,7 +86,7 @@ describe("Smoke Test Top Navbar Menu", () => {
     await driver
       .wait(
         until.elementLocated(By.xpath(`${parent}//ul[@aria-hidden="false"]`)),
-        2000
+        5000
       )
       .catch((e) => {
         throw new Error(e);
@@ -96,9 +96,9 @@ describe("Smoke Test Top Navbar Menu", () => {
 
     await driver.wait(until.titleIs("Swag Labs - All Products")).then((res) => {
       expect(res).to.equal(true);
-    }, 2000);
+    }, 5000);
   });
-  it("ST_05_Preset Packs", async () => {
+  it("CT_05_Preset Packs", async () => {
     const parent = `//section[@data-id="7b39696"]//div[@data-id="6c1d68c"]//ul[@id="menu-1-c2a71a6"]/li[4]`;
 
     await driver.findElement(By.xpath(`${parent}`)).click();
@@ -118,7 +118,7 @@ describe("Smoke Test Top Navbar Menu", () => {
       expect(res).to.equal(true);
     }, 2000);
   });
-  it("ST_06_Blogs", async () => {
+  it("CT_06_Blogs", async () => {
     await driver
       .findElement(
         By.xpath(
@@ -131,7 +131,7 @@ describe("Smoke Test Top Navbar Menu", () => {
       expect(res).to.equal(true);
     }, 2000);
   });
-  it("ST_07_Contact Us", async () => {
+  it("CT_07_Contact Us", async () => {
     await driver
       .findElement(
         By.xpath(

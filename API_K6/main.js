@@ -45,7 +45,6 @@ export const options = {
     select_Scenario: scenarioList[__ENV.Scenario] || sharedIterations,
   },
 };
-export function setup() {}
 export default function (params) {
   group("Products", () => {
     pro_getAllorOne(1500, 123);
@@ -68,8 +67,8 @@ export default function (params) {
   group("Categories", () => {
     cat_getAll_or_One(1500); // get All
     cat_getAll_or_One(1500, 2); // get One
-    cat_create_or_Update("Test Create Category", "https://http.cat/405"); //Create
-    cat_create_or_Update("Test Create Category", "https://http.cat/405", 1); //Update
+    cat_create_or_Update("Test Create Category", "https://http.cat/100"); //Create
+    cat_create_or_Update("Test Create Category", "https://http.cat/102", 1); //Update
   });
 
   group("Users", () => {

@@ -160,6 +160,7 @@ class ObjectsKategori {
       .catch((e) => {
         throw new Error(e);
       });
+    await this.driver.back();
 
     this.openKategori();
 
@@ -167,13 +168,15 @@ class ObjectsKategori {
     await this.driver
       .$(`//android.widget.ListView/android.widget.TextView[${index}]`)
       .isExisting()
-      .then((res) => {
+      .then(async (res) => {
         chai.expect(res).to.equal(false);
+        await this.driver.pause(1000);
       })
       .catch((e) => {
         throw new Error(e);
       });
-    this.returnHome();
+    // this.returnHome();
+    await this.driver.back();
   }
 }
 

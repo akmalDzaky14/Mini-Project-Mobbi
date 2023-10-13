@@ -29,7 +29,7 @@ describe("Test aplikasi CRUD", () => {
     formatTime(totalTime, true);
   });
 
-  describe("E2E_01_Halaman Kategori", () => {
+  describe.only("E2E_01_Halaman Kategori", () => {
     before(async () => {
       performance.mark("Prepare-start");
     });

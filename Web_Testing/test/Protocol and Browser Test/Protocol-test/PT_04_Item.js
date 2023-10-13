@@ -2,7 +2,7 @@ import { check, group } from "k6";
 import http from "k6/http";
 import { Trend } from "k6/metrics";
 
-import { headers } from "../../utils/headers.js";
+import { headers } from "../../../utils/headers.js";
 
 const pageDuration = new Trend("page_item_duration", true);
 

@@ -12,34 +12,56 @@ async function fetchAPI(destination, method = "GET", data = null, token) {
     return await request
       .get(destination)
       .set("Authorization", `Bearer ${token}`)
-      .expect(200);
+      .expect(200)
+      .catch((e) => {
+        throw new Error(e);
+      });
   }
   if (method === "GET") {
-    return await request.get(destination).expect(200);
+    return await request
+      .get(destination)
+      .expect(200)
+      .catch((e) => {
+        throw new Error(e);
+      });
   }
   if (method === "POST") {
     return await request
       .post(destination)
       .send(data)
       .set("Accept", "application/json")
-      .expect(201);
+      .expect(201)
+      .catch((e) => {
+        throw new Error(e);
+      });
   }
   if (method === "PUT") {
     return await request
       .put(destination)
       .send(data)
       .set("Accept", "application/json")
-      .expect(200);
+      .expect(200)
+      .catch((e) => {
+        throw new Error(e);
+      });
   }
   if (method === "PATCH") {
     return await request
       .patch(destination)
       .send(data)
       .set("Accept", "application/json")
-      .expect(200);
+      .expect(200)
+      .catch((e) => {
+        throw new Error(e);
+      });
   }
   if (method === "DELETE") {
-    return await request.delete(destination).expect(200);
+    return await request
+      .delete(destination)
+      .expect(200)
+      .catch((e) => {
+        throw new Error(e);
+      });
   }
 }
 module.exports = fetchAPI;

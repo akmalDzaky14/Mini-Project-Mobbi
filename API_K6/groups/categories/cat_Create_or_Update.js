@@ -17,6 +17,7 @@ const categoriesTrend = new Trend("Categories_Create_or_Update");
  * @param {number} [time=1000] - waktu (ms) eksekusi yang diharapkan
  * @return
  */
+let Id = 3;
 export default function cat_create_or_Update(
   name = "404 title",
   image = "https://http.cat/404",
@@ -31,6 +32,7 @@ export default function cat_create_or_Update(
         data,
         generateHeaders("Categories_Create")
       );
+      Id = res.body.id;
 
       categoriesTrend.add(res.timings.duration);
 
@@ -42,9 +44,12 @@ export default function cat_create_or_Update(
     });
     return;
   }
+  if (categoryId) {
+    Id = categoryId;
+  }
   group("Update a category", () => {
     const res = http.put(
-      "https://api.escuelajs.co/api/v1/categories/" + categoryId,
+      "https://api.escuelajs.co/api/v1/categories/" + Id,
       data,
       generateHeaders("Categories_Update")
     );

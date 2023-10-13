@@ -46,8 +46,9 @@ describe("Product Test", () => {
     it("Status should 200", async () => {
       await checkStatus(res, 200);
     });
+    // Tidak perlu karena return memang tidak ada, kalaupun mau di test, coba test apakah res.body merupakan object
     it("Should get single product", async () => {
-      expect(res.body[1]).is.equal(undefined);
+      expect(typeof res.body).is.equal(Object);
     });
     it("Product id should same", async () => {
       expect(res.body.id).is.equal(randomElement);

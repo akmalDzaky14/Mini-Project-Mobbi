@@ -55,8 +55,8 @@ describe("Products Filter Test", () => {
 
   describe("Filter by price range", () => {
     let res;
-    let min = 156;
-    let max = 160;
+    let min = 200;
+    let max = 300;
     before(async () => {
       res = await apiFetch("products?price_min=" + min + "&price_max=" + max);
     });

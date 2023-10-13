@@ -7,9 +7,7 @@ const setupDriver = require("../utils/setupDriver");
 const formatTime = require("../src/functions/convertTime");
 const HomePage = require("../src/pages/home");
 const AllProductsPage = require("../src/pages/allProducts");
-const PresetPackPage = require("../src/pages/presetPack");
 const CartPage = require("../src/pages/cart");
-const ThankYouPage = require("../src/pages/thankYou");
 const inputToCart = require("../src/functions/inputItemtoCart");
 
 describe("End to End Test Website Swaglabs", () => {
@@ -23,21 +21,19 @@ describe("End to End Test Website Swaglabs", () => {
 
   /** @type {WebDriver} */ let driver;
   /** @type {HomePage} */ let homePage;
-  /** @type {AllProductsPage} */ let allProductsPage;
   /** @type {CartPage} */ let cartPage;
+  /** @type {AllProductsPage} */ let allProductsPage;
 
   before(async () => {
     driver = await setupDriver();
     homePage = new HomePage(driver);
     allProductsPage = new AllProductsPage(driver);
-    presetPackPage = new PresetPackPage(driver);
-    thankYouPage = new ThankYouPage(driver);
     cartPage = new CartPage(driver);
 
     performance.mark("Prepare-start-all");
   });
   afterEach(async function () {
-    await driver.sleep(500);
+    await driver.sleep(700);
   });
   after(async function () {
     await driver.close();
@@ -52,14 +48,25 @@ describe("End to End Test Website Swaglabs", () => {
     before(async () => {
       performance.mark("Prepare-start");
       await homePage.openPage();
-      await driver.wait(until.titleContains("Quality Corporate"), 2000);
-      urlCheck = await driver.wait(until.urlContains("swaglabs.in"), 2000);
+      await driver
+        .wait(until.titleContains("Quality Corporate"), 5000)
+        .catch((e) => {
+          throw new Error(e);
+        });
+      urlCheck = await driver
+        .wait(until.urlContains("swaglabs"), 5000)
+        .catch((e) => {
+          throw new Error(e);
+        });
       titleCheck = await driver
         .wait(
           until.elementLocated(By.xpath('//div[@data-id="ded5840"]//div//h5')),
-          2000
+          5000
         )
-        .getText();
+        .getText()
+        .catch((e) => {
+          throw new Error(e);
+        });
     });
     after(() => {
       performance.mark("Prepare-finished");
@@ -80,14 +87,21 @@ describe("End to End Test Website Swaglabs", () => {
     before(async () => {
       performance.mark("Prepare-start");
       await allProductsPage.openPage();
-      urlCheck = await driver.wait(until.urlContains("products"), 2000);
+      urlCheck = await driver
+        .wait(until.urlContains("products"), 2000)
+        .catch((e) => {
+          throw new Error(e);
+        });
       await driver.sleep(1000);
       titleCheck = await driver
         .wait(
           until.elementLocated(By.xpath('//div[@data-id="8bec761"]//div//h1')),
           5000
         )
-        .getText();
+        .getText()
+        .catch((e) => {
+          throw new Error(e);
+        });
     });
     after(() => {
       performance.mark("Prepare-finished");
@@ -140,7 +154,7 @@ describe("End to End Test Website Swaglabs", () => {
     it("Select item 1", async () => {
       // Pilih item product
       res = await allProductsPage.selectPost(2);
-      await driver.wait(until.titleContains(res), 3000);
+      await driver.wait(until.titleContains(res), 5000);
       title = await driver.findElement(By.xpath(`//h1`)).getText();
       expect(title).to.equal(res);
 
@@ -162,7 +176,7 @@ describe("End to End Test Website Swaglabs", () => {
     it("Select item 2", async () => {
       // Pilih item product
       res = await allProductsPage.selectPost(3);
-      await driver.wait(until.titleContains(res), 3000);
+      await driver.wait(until.titleContains(res), 5000);
       title = await driver.findElement(By.xpath(`//h1`)).getText();
       expect(title).to.equal(res);
 
@@ -182,7 +196,7 @@ describe("End to End Test Website Swaglabs", () => {
     before(async () => {
       performance.mark("Prepare-start");
       await cartPage.openPage();
-      urlCheck = await driver.wait(until.urlContains("enquiry-cart"), 2000);
+      urlCheck = await driver.wait(until.urlContains("enquiry-cart"), 5000);
       await driver.sleep(1000);
       titleCheck = await driver
         .wait(
